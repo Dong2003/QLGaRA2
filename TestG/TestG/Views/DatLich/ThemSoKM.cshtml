@@ -1,0 +1,61 @@
+﻿@model TestG.Models.ChiTietBD
+
+@{
+    ViewBag.Title = "ThemSoKM";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+<h2 style="text-align:center">Chọn số kilomet và linh kiện phù hợp</h2>
+<hr />
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.MaDL)
+    
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        
+        <div class="col-md-10">
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label for="IDKM">Số ki lô mét</label>
+                        <div class="col-md-10">
+                            <select name="IDKM" class="form-control">
+                                @foreach (var item in new TestG.Models.ModelDatlich().DanhSachsokm())
+                                {
+                                    <option value="@item.IDKM">
+                                        @item.Sokm1 - @item.LinhKien
+                                    </option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label for="IDVatTu">Linh kiện</label>
+                        <div class="col-md-10">
+                            <select name="IDVatTu" class="form-control">
+                                @foreach (var item in new TestG.Models.ModelDatlich().DanhSachvt())
+                                {
+                                    <option value="@item.IDVatTu">
+                                        @item.Ten
+                                    </option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="col-md-offset-2 col-md-10" style="margin-left: 300px">
+            <input type="submit" value="Create" class="btn btn-primary" />
+            <a onclick="history.back()" class="btn btn-outline-success">
+                Quay lại
+            </a>
+        </div>
+    </div>
+}

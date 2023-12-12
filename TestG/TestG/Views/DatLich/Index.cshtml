@@ -1,0 +1,163 @@
+﻿@using TestG.Models
+@using PagedList.Mvc;
+@model PagedList.PagedList<TestG.Models.DATLICH>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    int i = 0;
+}
+
+<style>
+    .cbd:hover {
+        color: red;
+        cursor: pointer;
+    }
+</style>
+
+<h2 style="text-align:center;">THÔNG TIN LỊCH BẢO DƯỠNG</h2>
+
+<div class="d-flex justify-content-between align-items-center">
+    <p>
+        <button class="btn btn-outline-warning"><a href="@Url.Action("Create","DatLich")"><span class="fa fa-plus-square"></span>Thêm Mới Lịch Bảo Dưỡng</a></button>
+    </p>
+
+    <div class="m-b-10">
+        <h4 for="file" style="display: inline-block; margin-right: 10px;">Tìm kiếm</h4>
+        <input type="text" id="searchInput" placeholder="Nhập tên cần tìm ..." class="form-control" style="width: 230px; display: inline-block;" />
+    </div>
+</div>
+
+<div>
+    <table class="table table-bordered">
+        <thead class="thead-dark" style="text-align:center">
+            <tr>
+                <th width="50px">STT</th>
+                <th scope="col">Ngày bảo dưỡng</th>
+                <th scope="col">Thông tin khách hàng</th>
+                <th scope="col">Tên dịch vụ</th>
+                <th scope="col">Ghi chú</th>
+                <th scope="col">Trạng thái</th>
+                <th style="text-align:left" scope="col">Chức năng</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model)
+            {
+                i++;
+                <tr>
+                    <td style="text-align:center">
+                        @i
+                    </td>
+
+                    <td>
+                        @Html.FormatValue(item.NgayBD, "{0:dd/MM/yyyy HH:mm}")
+                    </td>
+
+                    <td style="text-align:left">
+                        Tên chủ xe: <strong>  @Html.DisplayFor(modelItem => item.TiepNhanXe.KhachHang.TenKH)</strong> <br />
+                        Tên hãng xe: <strong> @Html.DisplayFor(modelItem => item.TiepNhanXe.ThuongHieuXe.TenThuongHieu)</strong> <br />
+                        Biển số xe: <strong> @Html.DisplayFor(modelItem => item.TiepNhanXe.BienSoXe)</strong>
+                    </td>
+
+                    <td style="text-align:center">
+                        @Html.DisplayFor(modelItem => item.DichVu.Ten)
+                    </td>
+
+                    <td>
+                        @Html.Raw(item.GhiChu)
+                    </td>
+
+                    <td>
+                        @if (item.TinhTrang == true)
+                        {
+                            <span>Đã bảo dưỡng</span>
+                        }
+                        else
+                        {
+                            <span class="cbd" onclick="location.href = '@Url.Action("Index", "BaoDuong1")'">Chưa bảo dưỡng</span>
+                        }
+                    </td>
+
+                    <td class="col-md-2">
+                        <div>
+                            <a href="@Url.Action("Edit", new { id = item.MaDL })" class="btn btn-warning" role="button"><span class="fas fa-edit"></span></a>
+                            <a href="@Url.Action("Details", new { id = item.MaDL })" class="btn btn-warning" role="button"><span class="fas fa-dashboard"></span></a>
+                            <a onclick="if (confirm('Bạn có chắc chắn muốn xóa không') == true) {
+                            location.href='/DatLich/Delete?id=@item.MaDL'}"
+                               href="#" class="btn btn-danger"> <i class="fa fa-trash" aria-hidden="true"></i></a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
+
+<div class="PhanTrang-container">
+    <ul class="PhanTrang">
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+    </ul>
+</div>
+
+<style>
+    .PhanTrang-container {
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .PhanTrang {
+        display: flex;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+        .PhanTrang li {
+            margin-right: 10px;
+        }
+
+        .PhanTrang a {
+            display: block;
+            padding: 8px 12px;
+            text-decoration: none;
+            color: black;
+            background-color: none;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            transition: background-color 0.3s;
+        }
+
+            .PhanTrang a:hover {
+                background-color: red;
+            }
+
+        .PhanTrang .disabled {
+            opacity: 0.5;
+        }
+
+        .PhanTrang .active {
+            color: white;
+            background-color: #0094ff;
+        }
+</style>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#searchInput').on('input', function () {
+            var searchText = $(this).val().toLowerCase();
+
+            $('.table tbody tr').each(function () {
+                var rowData = $(this).text().toLowerCase();
+                var isVisible = rowData.includes(searchText);
+                $(this).toggle(isVisible);
+            });
+        });
+    });
+</script>

@@ -1,0 +1,88 @@
+﻿@model TestG.Models.VatTu
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+@using (Html.BeginForm("Edit", "VatTus", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.IDVatTu)
+
+        <p>
+            <button style="margin-left:550px" class="btn btn-warning">Điều chỉnh thông tin</button>
+        </p>
+
+        <div class="form-group">
+            <label class="control-label col-md-5">Tên linh kiện</label>
+            <div class="col-md-12">
+                @Html.EditorFor(model => model.Ten, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Ten, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        
+        <div class="row m-0">
+            <div class="form-group col-md-4">
+                <label class="control-label col-md-5">Giá bán</label>
+                <div class="col-md-12">
+                    @Html.EditorFor(model => model.Gia, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Gia, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group col-md-4">
+                <label class="control-label col-md-5">Số lượng</label>
+                <div class="col-md-12">
+                    @Html.EditorFor(model => model.SoLuong, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.SoLuong, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group col-md-4">
+                <label class="control-label col-md-5">Giá nhập</label>
+                <div class="col-md-12">
+                    @Html.EditorFor(model => model.GiaNhap, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.GiaNhap, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row m-1">
+            <div class="form-group col-md-6">
+                <label class="control-label col-md-5">Hãng xe</label>
+                <div class="col-md-12">
+                    @Html.DropDownList("IDHangXe", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.IDHangXe, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group col-md-6"">
+                <label class="control-label col-md-5">Phân loại</label>
+                <div class="col-md-12">
+                    @Html.DropDownList("IDLoai", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.IDLoai, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+       
+        <div class="form-group">
+            <label class="control-label col-md-2">Ảnh linh kiện:</label>
+            <div class="col-md-10">
+                <input type="file" name="fFileUpload" />
+                <img src="~/Images/@Model.Anh" width="120"> (Ảnh hiện tại)
+            </div>
+        </div>
+
+        <div class="col-md-offset-2 col-md-10" style=" margin-left:550px">
+            <input type="submit" value="Thay đổi" class="btn btn-primary" />
+            <a href="@Url.Action("Index", "VatTus")" class="btn btn-outline-success">
+                Quay lại
+            </a>
+        </div>
+    </div>
+}

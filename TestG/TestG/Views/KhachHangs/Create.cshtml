@@ -1,0 +1,63 @@
+﻿@model TestG.Models.KhachHang
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+<br />
+<h2>Thêm mới khách hàng</h2>
+<br />
+@using (Html.BeginForm("Create", "KhachHangs", FormMethod.Post, new { @enctype = "multipart/form-data" })) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="row">
+            <div class="form-group col-md-12">
+                <label class="control-label col-md-3">Tên khách hàng</label>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.TenKH, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.TenKH, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row m-0">
+            <div class="form-group col-md-5">
+                <label class="control-label col-md-3">Số điện thoại</label>
+                <div class="col-md-12">
+                    @Html.EditorFor(model => model.SDT, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.SDT, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group col-md-5">
+            <label class="control-label col-md-3">Địa chỉ</label>
+            <div class="col-md-12">
+                @Html.EditorFor(model => model.DiaChi, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.DiaChi, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label class="control-label col-md-3">Ảnh khách hàng:</label>
+                <div class="col-md-9">
+                    <input type="file" name="fFileUpload" />
+                    @ViewBag.ThongBao
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-offset-2 col-md-10" style=" margin-left:550px">
+            <input type="submit" value="Create" class="btn btn-primary" />
+            <a href="@Url.Action("Index", "KhachHangs")" class="btn btn-outline-success">
+                Quay lại
+            </a>
+        </div>
+    </div>
+}

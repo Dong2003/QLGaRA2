@@ -1,0 +1,140 @@
+﻿@using TestG.Models
+@using PagedList.Mvc;
+@model PagedList.PagedList<TestG.Models.VatTu>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+<hr />
+<p>
+    <button class="btn btn-outline-warning"><a href="@Url.Action("Create","VatTus")"><span class="fa fa-plus-square"></span>Thêm Mới</a></button>
+</p>
+
+<div>
+    <form>
+        <select name="idloai">
+            <option>
+                Tất cả các loại
+            </option>
+            @{
+                HashSet<string> trungten = new HashSet<string>();
+            }
+            @foreach (var item in new TestG.Models.ModelVattu().DanhSach())
+            {
+                if (trungten.Add(item.LoaiVatTu.Ten))
+                {
+                    <option value="@item.IDLoai">
+                        @item.LoaiVatTu.Ten
+                    </option>
+                }
+            }
+        </select>
+        <button class="btn btn-outline-dark">
+            <i class="fas fa-search fa-sm"></i>
+        </button>
+    </form>
+    <button class="btn btn-outline-warning"><a href="@Url.Action("XuatExcel", "VatTus")">In danh sách vật tư</a></button>
+</div>
+<br />
+
+<table class="table table-bordered">
+    <thead class="thead-light" style="text-align:center">
+        <tr>
+            <th scope="col">Thông tin vật tư</th>
+            <th scope="col">Thông tin giá</th>
+            <th style="width:120px">Số lượng</th>
+            <th scope="col">Ảnh</th>
+            <th scope="col">Phân loại</th>
+            <th style="text-align:left" scope="col">Chức năng</th>
+        </tr>
+    </thead>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td style="text-align:left">
+                Tên vật tư: <strong>  @Html.DisplayFor(modelItem => item.Ten)</strong> <br />
+                Hãng xe: <strong> @Html.DisplayFor(modelItem => item.ThuongHieuXe.TenThuongHieu)</strong>
+            </td>
+
+            <td style="text-align:right">
+                Giá bán: <strong>  @string.Format("{0:#,0}", item.Gia)</strong> <br />
+                Giá nhập: <strong>  @string.Format("{0:#,0}", item.GiaNhap)</strong> <br />
+            </td>
+
+            <td style="text-align:center">
+                @Html.DisplayFor(modelItem => item.SoLuong)
+            </td>
+
+            <td>
+                <img src="~/Images/@item.Anh" style="width:100px;" />
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.LoaiVatTu.Ten)
+            </td>
+
+            <td style="text-align:center">
+                <a href="@Url.Action("Edit", new { id = item.IDVatTu })" class="btn btn-warning" role="button"><span class="fas fa-edit"></span></a>
+                <button data-toggle="modal" data-target="@("#detail-"+item.IDVatTu)" data-url="@Url.Action("Details","VatTus",new {id = item.IDVatTu})" class="btn btn-warning" style="font:bold; color:white">Xem chi tiết</button>
+                @Html.Partial("Details", item)
+                <a onclick="if (confirm('Bạn có chắc chắn muốn xóa không') == true) {
+                    location.href='/VatTus/Delete?id=@item.IDVatTu'}"
+                   href="#" class="btn btn-danger">
+                    <i class="fa fa-trash" aria-hidden="true"></i>
+                </a>
+            </td>
+        </tr>
+    }
+</table>
+
+<div class="PhanTrang-container">
+    <ul class="PhanTrang">
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+    </ul>
+</div>
+
+<style>
+    .PhanTrang-container {
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .PhanTrang {
+        display: flex;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+        .PhanTrang li {
+            margin-right: 10px;
+        }
+
+        .PhanTrang a {
+            display: block;
+            padding: 8px 12px;
+            text-decoration: none;
+            color: black;
+            background-color: none;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            transition: background-color 0.3s;
+        }
+
+            .PhanTrang a:hover {
+                background-color: red;
+            }
+
+        .PhanTrang .disabled {
+            opacity: 0.5;
+        }
+
+        .PhanTrang .active {
+            color: white;
+            background-color: #0094ff;
+        }
+</style>

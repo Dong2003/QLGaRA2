@@ -1,0 +1,74 @@
+﻿@model TestG.Models.DATLICH
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+<h2 style="text-align:center">Điều Chỉnh Thông Tin</h2>
+
+@using (Html.BeginForm("Edit", "DatLich", FormMethod.Post,
+    new { @enctype = "mutipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <form id="contactForm" data-sb-form-api-token="API_TOKEN">
+
+            <div class="form-floating mb-3">
+                <div class="form-outline">
+                    <label class="form-label" for="form11Example4">Mã đặt lịch</label>
+                    <input type="text" id="form11Example4" class="form-control" name="iMaDL" value="@Model.MaDL" readonly />
+                </div>
+            </div>
+
+            <div class="form-floating mb-3">
+                <div class="form-outline">
+                    <label class="form-label" for="form11Example4">Ngày bảo dưỡng</label>
+                    <input type="date" id="form11Example4" name="dNgayBD" class="form-control" value="@Convert.ToDateTime(Model.NgayBD).ToString("yyyy-MM-dd")" required />
+                </div>
+            </div>
+
+            <div class="form-floating mb-3">
+                @Html.DropDownList("IDTiepNhanXe", ViewBag.TienCongList as SelectList, "-- Hãy chọn mã tiếp nhận --", new { @class = "form-select", aria_label = "Mã tiếp nhận", @required = "required" })
+                <label for="IDTiepNhanXe">Mã tiếp nhận</label>
+            </div>
+
+            <div class="form-floating mb-3">
+                @Html.DropDownList("IDTienCong", ViewBag.TienCongList as SelectList, "-- Hãy chọn dịch vụ --", new { @class = "form-select", aria_label = "Dịch vụ", @required = "required" })
+                <label for="IDTienCong">Dịch vụ</label>
+            </div>
+
+            <div class="form-floating mb-3">
+                @Html.DropDownList("sTinhTrang", new SelectList(
+                    new List<SelectListItem>
+                    {
+                        new SelectListItem { Text = "Chưa bảo dưỡng", Value = "false" },
+                        new SelectListItem { Text = "Đã bảo dưỡng", Value = "true" }
+                    }, "Value", "Text"), new { @class = "form-control" })
+                <label for="TinhTrang">Tình trạng</label>
+            </div>
+
+            <label for="ghiChu">Ghi chú</label>
+            <div class="form-floating mb-3">
+                <textarea class="form-control" name="sGhiChu" id="ghiChu" type="text" placeholder="" style="height: 10rem;" data-sb-validations="required">@Model.GhiChu</textarea>
+            </div>
+
+        </form>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Cập nhật" class="btn btn-primary" />
+                <a href="@Url.Action("Index", "DichVus")" class="btn btn-outline-success">
+                    Quay lại
+                </a>
+            </div>
+        </div>
+
+    </div>
+}
+
+<script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
+<script>CKEDITOR.replace('ghiChu');</script>

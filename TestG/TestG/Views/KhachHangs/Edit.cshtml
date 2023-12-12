@@ -1,0 +1,64 @@
+﻿@model TestG.Models.KhachHang
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+@using (Html.BeginForm("Edit", "KhachHangs", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.IDKhachHang)
+
+        <p>
+            <button style="margin-left:550px" class="btn btn-warning">Điều chỉnh thông tin</button>
+        </p>
+        <hr />
+        <table class="table table-bordered">
+            <div class="row m-0">
+                <div class="form-group col-md-4">
+                    <label class="control-label col-md-5">Tên Khách hàng</label>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.TenKH, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.TenKH, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label class="control-label col-md-5">Số điện thoại</label>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.SDT, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.SDT, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label class="control-label col-md-4">Địa chỉ</label>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.DiaChi, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.DiaChi, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </table>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Ảnh khách hàng:</label>
+            <div class="col-md-10">
+                <input type="file" name="fFileUpload" />
+                <img src="~/Images/@Model.AnhKH" width="120"> (Ảnh hiện tại)
+            </div>
+        </div>
+
+        <div class="col-md-offset-2 col-md-10" style=" margin-left:550px">
+            <input type="submit" value="Thay đổi" class="btn btn-primary" />
+            <a href="@Url.Action("Index", "KhachHangs")" class="btn btn-outline-success">
+                Quay lại
+            </a>
+        </div>
+
+    </div>
+}

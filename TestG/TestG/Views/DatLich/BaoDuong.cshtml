@@ -1,0 +1,75 @@
+﻿@model TestG.Models.BaoDuong1
+
+@{
+    ViewBag.Title = "BaoDuong";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+<div class="container mt-4">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.MaDL)
+
+        <div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="card">
+                <div class="card-body">
+
+                    <div class="form-group">
+                        <label for="MaDL">Mã đặt lịch</label>
+                        <div class="col-md-10">
+                            @Html.DisplayFor(model => model.MaDL)
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="IDVatTu">Linh kiện</label>
+                        <div class="col-md-10">
+                            <select name="IDVatTu" class="form-control">
+                                @foreach (var item in new TestG.Models.ModelVattu().DanhSach())
+                                {
+                                    <option value="@item.IDVatTu">
+                                        @item.Ten - @string.Format("{0:#,0}", item.Gia) VNĐ
+                                    </option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="SoLuong">Số lượng</label>
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.SoLuong, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.SoLuong, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="IDTienCong">Dịch vụ</label>
+                        <div class="col-md-10">
+                            <select name="IDTienCong" class="form-control">
+                                @foreach (var item in new TestG.Models.ModelVattu().DanhSachDichVu())
+
+                                {
+                                    <option value="@item.IDTienCong">
+                                        @item.Ten -
+                                        @string.Format("{0:#,0}", item.GiaTri)
+                                    </option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-12 text-center">
+                            <button type="submit" class="btn btn-primary">Đồng ý</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    }
+</div>

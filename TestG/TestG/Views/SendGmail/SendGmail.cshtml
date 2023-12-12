@@ -1,0 +1,80 @@
+﻿@model TestG.Models.Gmail
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <div>
+        @using (Html.BeginForm("SendGmail", "SendGmail", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <table>
+                <tr>
+                    <td>
+                        To:
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.To)
+                    </td>
+
+                </tr>
+
+                <tr>
+                    <td>
+                        Subject:
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.Subject)
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        Body:
+                    </td>
+                    <td>
+                        @Html.TextAreaFor(model => model.Body, new { rows = "15", cols = "25" })
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        Gmail:
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.Email)
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        PassWord:
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.Password, new
+                   {
+                       type = "password"
+                   })
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <input type="submit" value="Send" />
+                    </td>
+                </tr>
+            </table>
+
+            <br />
+            <span style="color:green">@ViewBag.Message</span>
+        }
+    </div>
+</body>
+</html>

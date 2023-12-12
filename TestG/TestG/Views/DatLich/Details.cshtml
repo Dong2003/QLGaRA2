@@ -1,0 +1,278 @@
+﻿@model TestG.Models.DATLICH
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    int i = 0;
+    int Tong = 0;
+}
+
+<hr />
+<div class="col-md-12">
+    <div class="row">
+        <div class="col-md-6">
+
+            <p>
+                <button onclick="history.back()" class="btn btn-warning">Quay lại</button>
+            </p>
+
+            <table style="color:black" class="table table-bordered">
+
+                <tr>
+                    <td>
+                        Mã đặt lịch
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(model => model.MaDL)
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        Chủ xe
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(model => model.TiepNhanXe.KhachHang.TenKH)
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        Hãng xe
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(model => model.TiepNhanXe.ThuongHieuXe.TenThuongHieu)
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        Biển số xe
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(model => model.TiepNhanXe.BienSoXe)
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        Dịch vụ
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(model => model.DichVu.Ten)
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        Ghi chú
+                    </td>
+
+                    <td>
+                        @Html.Raw(Model.GhiChu)
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="col-md-6">
+            <p>
+                <a href="@Url.Action("ThemSoKM", "DatLich", new { id = @Model.MaDL })"><button class="btn btn-outline-warning">Chọn thông tin</button></a>
+            </p>
+
+            <div>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Số ki lô mét</th>
+                            <th>Tên linh kiện phù hợp</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var item in new TestG.Models.ModelDatlich().DanhSachKM(Model.MaDL))
+                        {
+                            var itemId = item.IDChiTietBD;
+                            <tr>
+                                <td>
+                                    <b style="color:black">
+                                        @item.SOKM.Sokm1
+                                    </b>
+                                </td>
+
+                                <td>
+                                    <b style="color:black">
+                                        @item.VatTu.Ten
+                                    </b>
+                                </td>
+
+                                <td>
+                                    <a onclick="if (confirm('Bạn có chắc chắn muốn xóa không') == true) {
+                                        location.href='/DatLich/Xoakm?id=@item.IDChiTietBD'}"
+                                       href="#" class="btn btn-danger"> Xóa</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <p>
+        <!-- Button to open the modal -->
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+            Bảo dưỡng
+        </button>
+    </p>
+
+    <div class="modal fade" id="myModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Thông tin</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                @Html.Action("BaoDuong", "DatLich", new { a = @Model.MaDL })
+                @Url.Action("BaoDuong", "DatLich", new { id = @Model.MaDL })
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+        <div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Tên linh kiện</th>
+                        <th>Giá</th>
+                        <th style="width:157px;">Số lượng</th>
+                        <th>Dịch vụ</th>
+                        <th>Giá dịch vụ</th>
+                        <th>Thành tiền</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var item in new TestG.Models.ModelDatlich().DanhSachBaoDuong(Model.MaDL))
+                    {
+
+                        i++;
+                        var itemId = item.IDBaoDuong;
+                        <tr>
+                            <td>
+                                <b style="color:black">
+                                    @i
+                                </b>
+                            </td>
+
+                            <td>
+                                <b style="color:black">
+                                    @item.VatTu.Ten
+                                </b>
+                            </td>
+
+                            <td>
+                                <b style="color:black">
+                                    @string.Format("{0:#,0}", item.VatTu.Gia)
+                                </b>
+                            </td>
+
+                            <td>
+                                <b style="color:black">
+                                    <form method="post" action="@Url.Action("CapNhatSoLuong","DatLich", new {id=item.IDBaoDuong})">
+                                        <div style="display: flex; justify-content: flex-end;">
+                                            <input type="number" min="1" name="SoLuong" value="@item.SoLuong" />
+                                            <button type="submit" class="btn btn-primary" style="padding: 5px 10px; font-size: 12px;">Cập nhật</button>
+                                        </div>
+                                    </form>
+                                </b>
+                            </td>
+
+                            <td>
+                                <b style="color:black">
+                                    @item.DichVu.Ten
+                                </b>
+                            </td>
+
+                            <td>
+                                <b style="color:black">
+                                    @string.Format("{0:#,0}", @item.DichVu.GiaTri)
+
+                                </b>
+                            </td>
+
+                            <td>
+                                <b style="color:black">
+                                    @string.Format("{0:#,0}", (item.VatTu.Gia * item.SoLuong + item.DichVu.GiaTri))
+                                </b>
+                            </td>
+
+                            <td>
+                                <a onclick="if (confirm('Bạn có chắc chắn muốn xóa không') == true) {
+                            location.href='/DatLich/Xoa?id=@item.IDBaoDuong'}"
+                                   href="#" class="btn btn-danger"> Xóa</a>
+                            </td>
+                        </tr>
+
+                        if (item.VatTu.Gia != null && item.SoLuong != null && item.DichVu.GiaTri != null)
+                        {
+                            Tong += (int)(item.VatTu.Gia * item.SoLuong + item.DichVu.GiaTri);
+                        }
+                     }
+                </tbody>
+                    <tr>
+                        <td>
+                            <b style="color:black">Giảm giá:</b>
+                        </td>
+                        <td>
+                            <input type="number" id="sGiamGia" min="0" max="100" step="5" value="0" />
+                        </td>
+                        <td>
+                            <button onclick="updateTotal()" class="btn btn-primary" style="padding: 5px 10px; font-size: 12px;">Cập nhật</button>
+                        </td>
+                        <td colspan="5">
+                            <b style="color:black" id="SGiaUpdate">0</b>
+                        </td>
+                    </tr>
+            </table>
+        </div>
+
+        <div>
+            <h2 style="text-align:right"> <strong>Tổng Tiền Ban Đầu: @string.Format("{0:#,0}", Tong) VNĐ</strong></h2>
+        </div>
+
+        <div>
+            <h2 style="text-align:right; display: none;"> <strong>Tổng Tiền Sau Khi Giảm Giá: <span id="SGiaMoi">0</span> VNĐ</strong></h2>
+        </div>
+
+        <footer>
+            <a href="@Url.Action("XuatHoaDon", "DatLich")">In hóa đơn</a>
+        </footer>
+</div>
+
+<script>
+    function updateTotal() {
+        var tongtien = @Tong;
+        var giamgia = parseInt($('#sGiamGia').val());
+
+        if (!isNaN(giamgia) && giamgia >= 0 && giamgia <= 100) {
+            var SGiaUpdate = tongtien * (100 - giamgia) / 100;
+            $('#SGiaUpdate').text(SGiaUpdate.toLocaleString());
+            $('#SGiaMoi').text(SGiaUpdate.toLocaleString() + " VNĐ");
+            $('h2').show();
+        }
+    }
+</script>

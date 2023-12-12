@@ -1,0 +1,12 @@
+O:\Git\QLGara\TestG\Models\bin\Debug\Models.dll.config
+O:\Git\QLGara\TestG\Models\bin\Debug\Models.dll
+O:\Git\QLGara\TestG\Models\bin\Debug\Models.pdb
+O:\Git\QLGara\TestG\Models\bin\Debug\EntityFramework.dll
+O:\Git\QLGara\TestG\Models\bin\Debug\EntityFramework.SqlServer.dll
+O:\Git\QLGara\TestG\Models\bin\Debug\EntityFramework.xml
+O:\Git\QLGara\TestG\Models\bin\Debug\EntityFramework.SqlServer.xml
+O:\Git\QLGara\TestG\Models\obj\Debug\Models.csproj.AssemblyReference.cache
+O:\Git\QLGara\TestG\Models\obj\Debug\Models.csproj.CoreCompileInputs.cache
+O:\Git\QLGara\TestG\Models\obj\Debug\Models.csproj.CopyComplete
+O:\Git\QLGara\TestG\Models\obj\Debug\Models.dll
+O:\Git\QLGara\TestG\Models\obj\Debug\Models.pdb

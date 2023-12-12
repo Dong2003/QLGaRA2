@@ -1,0 +1,88 @@
+﻿@model TestG.Models.VatTu
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+<hr />
+<p style="margin-left:380px">
+    <button class="btn btn-outline-danger">Thông Tin</button>
+</p>
+
+@using (Html.BeginForm("Create", "VatTus", FormMethod.Post, new { @enctype = "multipart/form-data" })) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Tên linh kiện</label>
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.Ten, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Ten, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="row m-0">
+            <div class="form-group col-md-3">
+                <label class="control-label col-md-2">Giá</label>
+                <div class="col-md-14">
+                    @Html.EditorFor(model => model.Gia, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Gia, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group col-md-3">
+                <label class="control-label col-md-12">Số lượng</label>
+                <div class="col-md-14">
+                    @Html.EditorFor(model => model.SoLuong, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.SoLuong, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group col-md-3">
+                <label class="control-label col-md-12">Giá nhập</label>
+                <div class="col-md-14">
+                    @Html.EditorFor(model => model.GiaNhap, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.GiaNhap, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row m-1">
+            <div class="form-group col-md-4">
+                <label class="control-label col-md-3">Hãng xe</label>
+                <div class="col-md-12">
+                    @Html.DropDownList("IDHangXe", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.IDHangXe, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group col-md-5">
+                <label class="control-label col-md-12">Loại linh kiện</label>
+                <div class="col-md-12">
+                    @Html.DropDownList("IDLoai", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.IDLoai, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label class="control-label col-md-3">Ảnh linh kiện:</label>
+                <div class="col-md-9">
+                    <input type="file" name="fFileUpload" />
+                    @ViewBag.ThongBao
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-offset-2 col-md-10" style=" margin-left:350px">
+            <input type="submit" value="Create" class="btn btn-primary" />
+            <a href="@Url.Action("Index", "VatTus")" class="btn btn-outline-success">
+                Quay lại
+            </a>
+        </div>
+    </div>
+}

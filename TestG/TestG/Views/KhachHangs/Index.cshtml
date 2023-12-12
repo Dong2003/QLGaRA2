@@ -1,0 +1,103 @@
+﻿@model IEnumerable<TestG.Models.KhachHang>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    int i = 0;
+}
+<hr />  
+<div class="d-flex justify-content-between align-items-center">
+    <p class="btn btn-outline-warning">
+        @Html.ActionLink("Thêm khách hàng", "Create")
+    </p>
+    <br />
+
+    <div class="m-b-10">
+        <h4 for="file" style="display: inline-block; margin-right: 10px;">Tìm kiếm</h4>
+        <input type="text" id="searchInput" placeholder="Nhập tên cần tìm ..." class="form-control" style="width: 230px; display: inline-block;" />
+    </div>
+</div>
+<br />
+
+<div class="col-md-12">
+    <table class="table table-bordered">
+        <thead style="background:#808080; text-align:center">
+            <tr>
+                <th width="50px" ">
+                    STT
+                </th>
+
+                <th>
+                    Tên khách hàng
+                </th>
+
+                <th>
+                    Số điện thoại
+                </th>
+
+                <th>
+                    Địa chỉ
+                </th>
+
+                <th>
+                    Ảnh
+                </th>
+
+                <th>
+                    Chức năng
+                </th>
+            </tr>
+        </thead>
+
+        @foreach (var item in Model)
+        {
+            i++;
+            <tr>
+                <td style="text-align:center">
+                    @i
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.TenKH)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.SDT)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.DiaChi)
+                </td>
+
+                <td>
+                    <img src="~/Images/@item.AnhKH" style="width:100px;" />
+                </td>
+
+                <td style="text-align:center">
+                    <a href="@Url.Action("Edit", new { id = item.IDKhachHang })" class="btn btn-warning" role="button"><span class="fas fa-edit"></span></a>
+                    <button data-toggle="modal" data-target="@("#detail-"+item.IDKhachHang)" data-url="@Url.Action("Details","KhachHangs",new {id = item.IDKhachHang})" class="btn btn-warning" style="font:bold; color:white">Xem chi tiết</button>
+                    @Html.Partial("Details", item)
+                    <a onclick="if (confirm('Bạn có chắc chắn muốn xóa không') == true) {
+                        location.href='/KhachHangs/Delete?id=@item.IDKhachHang'}"
+                       href="#" class="btn btn-danger"> <i class="fa fa-trash" aria-hidden="true"></i></a>
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#searchInput').on('input', function () {
+            var searchText = $(this).val().toLowerCase();
+
+            $('.table tbody tr').each(function () {
+                var rowData = $(this).text().toLowerCase();
+                var isVisible = rowData.includes(searchText);
+                $(this).toggle(isVisible);
+            });
+        });
+    });
+</script>

@@ -1,0 +1,296 @@
+﻿@{
+ViewBag.Title = "Index";
+Layout = "~/Areas/adminarea/Views/Shared/_LayoutAdmi.cshtml";
+}
+<!-- Custom fonts for this template-->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<link href="~/Acsset/AccssetAdmin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+rel="stylesheet">
+
+<!-- Custom styles for this template-->
+<link href="~/Acsset/AccssetAdmin/css/sb-admin-2.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://getbootstrap.com/docs/4.0/components/modal">
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Dịch vụ</h6>
+    </div>
+    <p>
+        <button class="btn btn-success" id="btnAdd"><i class="fa fa-plus-circle" aria-hidden="true">Thêm</i></button>
+    </p>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Mã dịch vụ</th>
+                        <th>Tên dịch vụ</th>
+                        <th>Giá</th>
+                        <th>Chức năng</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>Mã dịch vụ</th>
+                        <th>Tên dịch vụ</th>
+                        <th>Giá</th>
+                        <th>Chức năng</th>
+                    </tr>
+                </tfoot>
+                <tbody id="IDdv">
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Trigger the modal with a button -->
+<!-- Modal -->
+<div id="ModalDV" class="modal" role="dialog">
+    <div class="modal-dialog" role="document">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="panel panel-primary">
+                <p><div class="panel-heading panel" style="text-align:center;color:red" id="modalTital"></div></p>
+                <div class="panel-body">
+                    <input type="text" hidden id="IDD" value="" />
+                    <div class="form-group">
+                        <label style="color:black">Tên dịch vụ</label>
+                        <input type="text" class="form-control" id="TenDichVu" placeholder="Nhập dịch vụ">
+                    </div>
+                    <div class="form-group">
+                        <label style="color:black">Đơn giá</label>
+                        <input type="text" class="form-control" id="DonGia" placeholder="Nhập đơn giá">
+                    </div>
+
+
+                </div>
+            </div>
+            <!--<div class="modal-body">
+
+            </div>-->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnSubmit">Lưu</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section scrips
+{
+    <script>
+        $(document).ready(function () {
+            loadTienCongData();
+        })
+        //Xóa
+        $(document).on('click', "button[name='Xoa']", function () {
+            let iddv = $(this).closest('tr').attr('id');
+            if (confirm("Xác nhận xóa")) {
+                $.ajax(
+                    {
+                        url: '/adminarea/DichVu/XoaDichVu',
+                        type: 'post',
+                        data: {
+                            id: iddv
+                        },
+
+                        success: function (data) {
+                            if (data.code == 200) {
+                                alert(data.mgs);
+                                loadTienCongData();
+                            }
+                            else {
+                                alert(data.mgs);
+                            }
+                        }
+
+                    });
+            }
+        });
+        // sửa
+        $(document).on('click', "button[name='Update']", function () {
+            let iddv = $(this).closest('tr').attr('id');
+            $.ajax(
+                {
+                    url: '/adminarea/DichVu/ChiTietDichVu',
+                    type: 'get',
+                    data: {
+                        id: iddv
+                    },
+                    success: function (data) {
+                        if (data.code == 200) {
+                            $('#ModalDV').modal();
+                            $('#modalTital').text('Chỉnh sửa');
+                            $('#TenDichVu').val(data.v.Ten);
+                            $('#DonGia').val(data.v.GiaTri);
+                            $('#IDD').val(iddv);
+
+
+                            $('#TenDichVu').prop('readonly', false);
+                            $('#DonGia').prop('readonly', false);
+                            $('#btnSubmit').Show();
+
+
+                        }
+                        else {
+                            alert(data.mgs);
+                        }
+                    }
+
+                });
+        });
+        // xem
+        $(document).on('click', "button[name='Xem']", function () {
+            let iddv = $(this).closest('tr').attr('id');
+            $.ajax(
+                {
+                    url: '/adminarea/DichVu/ChiTietDichVu',
+                    type: 'get',
+                    data: {
+                        id: iddv
+                    },
+                    success: function (data) {
+                        if (data.code == 200) {
+                            $('#modalTital').text('Xem thông tin ');
+
+                            $('#TenDichVu').val(data.v.Ten);
+                            $('#DonGia').val(data.v.GiaTri);
+
+                            $('#TenDichVu').prop('readonly', true);
+                            $('#DonGia').prop('readonly', true);
+                            $('#btnSubmit').hide();
+
+                            $('#ModalDV').modal();
+                        }
+                        else {
+                            alert(data.mgs);
+                        }
+                    }
+
+                });
+
+        });
+
+        $('#btnSubmit').click(function () {
+            let tendichvu = $('#TenDichVu').val().trim();
+            let dongia = $('#DonGia').val().trim();
+            if (tendichvu.length == 0 || dongia.length == 0) {
+                alert('Vui lòng nhập đủ giữ liệu');
+                return;
+            }
+            let iddv = $(this).closest('tr').attr('id');
+            let idDV = $('#IDD').val().trim();
+            if (idDV.length == 0) {
+                // ajax
+                $.ajax(
+                    {
+                        url: '/adminarea/DichVu/ThemDsDichVu',
+                        type: 'post',
+                        data: {
+                            ten: tendichvu,
+                            dongia: dongia
+                        },
+                        success: function (data) {
+                            if (data.code == 200) {
+                                alert(data.mgs);
+                                loadTienCongData();
+                                $('#TenDichVu').val('');
+                                $('#DonGia').val('');
+                            }
+                            else {
+                                alert(data.mgs);
+                            }
+                        }
+                    });
+            }
+            else {
+                $.ajax(
+                    {
+                        url: '/adminarea/DichVu/CapNhatDichVu',
+                        type: 'post',
+                        data: {
+                            id: idDV,
+                            ten: tendichvu,
+                            dongia: dongia
+                        },
+                        success: function (data) {
+                            if (data.code == 200) {
+                                alert(data.mgs);
+                                loadTienCongData();
+                                $('#ModalDV').modal('hide');
+                            }
+                            else {
+                                alert(data.mgs);
+                            }
+                        }
+                    });
+
+            }
+        });
+
+
+
+        $('#btnAdd').click(function () {
+            $('#modalTital').text('Thêm dịch vụ mới');
+            $('#IDD').val('');
+            $('#ModalDV').modal();
+            $('#TenDichVu').prop('readonly', false);
+            $('#DonGia').prop('readonly', false);
+            $('#btnSubmit').Show();
+        });
+
+
+        function loadTienCongData() {
+            $.ajax({
+
+                url: '/adminarea/DichVu/DsDichVu', // Thay thế "ControllerName" bằng tên của Controller thực tế
+                type: 'get',
+                success: function (data) {
+                    // console.log(data);
+                    if (data.code == 200) {
+                        $('#IDdv').empty();
+                        $.each(data.dsdv, function (k, v) {
+                            let tr = '<tr id="' + v.id + '">'
+                            tr += '<td>' + v.id + '</td>';
+                            tr += '<td>' + v.Ten + '</td>';
+                            tr += '<td>' + v.Tien + '</td>';
+                            tr += '<td>';
+                            tr += '<button class="btn btn-info" name= "Xem"> <i class="fa fa-info-circle" aria-hidden="true" ></i ></button>&nbsp;&nbsp;';
+                            tr += '<button class="btn btn-warning" name= "Update"> <i class="fa fa-magic" aria-hidden="true"></i></button>&nbsp;&nbsp;';
+                            tr += '<button class="btn btn-danger" name= "Xoa"> <i class="fa fa-trash" aria-hidden="true" ></i></button>';
+                            tr += '</td>';
+                            tr += '</tr>';
+                            $('#IDdv').append(tr);
+                        });
+
+                    }
+                }
+            });
+        }
+    </script>
+}
+<!-- Bootstrap core JavaScript-->
+<script src="~/Acsset/AccssetAdmin/vendor/jquery/jquery.min.js"></script>
+<script src="~/Acsset/AccssetAdmin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="~/Acsset/AccssetAdmin/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="~/Acsset/AccssetAdmin/js/sb-admin-2.min.js"></script>
+
+<!-- Page level plugins -->
+<script src="~/Acsset/AccssetAdmin/vendor/chart.js/Chart.min.js"></script>
+
+<!-- Page level custom scripts -->
+<script src="~/Acsset/AccssetAdmin/js/demo/chart-area-demo.js"></script>
+<script src="~/Acsset/AccssetAdmin/js/demo/chart-pie-demo.js"></script>
+

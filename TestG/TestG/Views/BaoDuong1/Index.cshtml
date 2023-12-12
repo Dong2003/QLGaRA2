@@ -1,0 +1,196 @@
+﻿@model IEnumerable<TestG.Models.BaoDuong1>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    int i = 0;
+}
+
+<h2 style="text-align:center;">DANH SÁCH LINH KIỆN BẢO DƯỠNG</h2>
+
+<div class="d-flex justify-content-between align-items-center">
+    <div class="m-b-10">
+        <h4 for="file" style="display: inline-block; margin-right: 10px;">Tìm kiếm</h4>
+        <input type="text" id="searchInput" placeholder="Nhập tên cần tìm ..." class="form-control" style="width: 230px; display: inline-block;" />
+    </div>
+</div>
+<br />
+
+<div>
+    <form>
+        <select name="idloai">
+            <option>
+                Tất cả các loại
+            </option>
+            @{
+                var trungten = new HashSet<string>();
+                var danhSach = new TestG.Models.ModelBaoDuong().DanhSach();
+            }
+            @foreach (var item in danhSach)
+            {
+                if (trungten.Add(item.DATLICH.TiepNhanXe.BienSoXe))
+                {
+                    <option value="@item.DATLICH.IDTiepNhanXe">
+                        @item.DATLICH.TiepNhanXe.BienSoXe
+                    </option>
+                }
+            }
+        </select>
+        <button type="submit" class="btn btn-outline-dark">
+            <i class="fas fa-search fa-sm"></i>
+        </button>
+    </form>
+</div>
+<br />
+
+<div class="col-md-12">
+    <table class="table table-bordered" ">
+        <thead style="background:#00ffff; text-align:center">
+            <tr>
+                <th style="text-align:center" width="120px">
+                    STT
+                </th>
+
+                <th>
+                    Tên linh kiện
+                </th>
+
+                <th>
+                    Số lượng
+                </th>
+
+                <th>
+                    Giá thay
+                </th>
+
+                <th>
+                    Tên dịch vụ
+                </th>
+
+                <th>
+                    Giá dịch vụ
+                </th>
+
+                <th>
+                    Biển số xe
+                </th>
+
+                <th>
+                    Ngày bảo dưỡng
+                </th>
+
+                <th>
+                    Loại linh kiện
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                i++;
+                <tr>
+                    <td style="text-align:center">
+                        @i
+                    </td>
+
+                    <td>
+                        @item.VatTu.Ten
+                    </td>
+
+                    <td style="text-align:right">
+                        @Html.DisplayFor(modelItem => item.SoLuong)
+                    </td>
+
+                    <td style="text-align:right">
+                        @string.Format("{0:#,0}", item.VatTu.Gia)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DichVu.Ten)
+                    </td>
+
+                    <td style="text-align:right">
+                        @string.Format("{0:#,0}", item.DichVu.GiaTri)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DATLICH.TiepNhanXe.BienSoXe)
+                    </td>
+
+                    <td>
+                        @Html.FormatValue(item.DATLICH.NgayBD, "{0:dd/MM/yyyy HH:mm}")
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.VatTu.LoaiVatTu.Ten)
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+
+        <tfoot>
+            <tr style="background:#00ff90">
+                <td>
+                    TỔNG TIỀN
+                </td>
+
+                <td>
+                </td>
+
+                <th style="text-align:right">
+                    @string.Format("{0:#,0}", Model.Sum(item => item.SoLuong))
+                </th>
+
+                <th style="text-align:right">
+                    @string.Format("{0:#,0}", Model.Sum(item => item.SoLuong * item.VatTu.Gia))
+                </th>
+
+                <td>
+                </td>
+
+                <th style="text-align:right">
+                    @string.Format("{0:#,0}", Model.Sum(item => item.DichVu.GiaTri))
+                </th>
+
+                <td>
+                </td>
+
+                <td>
+                </td>
+
+                <td>
+                </td>
+
+            </tr>
+        </tfoot>
+    </table>
+
+    <style>
+        .centered-button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+
+    <div class="centered-button">
+        <button class="btn btn-outline-secondary"><a href="@Url.Action("XuatExcel", "BaoDuong1")">DownLoad</a></button>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#searchInput').on('input', function () {
+            var searchText = $(this).val().toLowerCase();
+
+            $('.table tbody tr').each(function () {
+                var rowData = $(this).text().toLowerCase();
+                var isVisible = rowData.includes(searchText);
+                $(this).toggle(isVisible);
+            });
+        });
+    });
+</script>

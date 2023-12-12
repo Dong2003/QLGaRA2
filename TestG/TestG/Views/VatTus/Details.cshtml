@@ -1,0 +1,78 @@
+﻿@model TestG.Models.VatTu
+
+<div class="modal fade" id="detail-@Model.IDVatTu" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle" style="color:aqua">Thông tin chi tiết</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <!---->
+                <form>
+                    <div class="row mb-4">
+                        <div class="col">
+                            <div class="form-outline">
+                                <label class="form-label" for="form11Example4">Tên linh kiện</label>
+                                <input type="text" id="form11Example4" class="form-control" value="@Html.DisplayFor(modelItem => modelItem.Ten)" readonly />
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <div class="form-outline">
+                                <label class="form-label" for="form6Example2">Giá bán</label>
+                                <input type="text" id="form6Example2" class="form-control" value=" @Html.DisplayFor(modelItem => modelItem.Gia)" readonly />
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <div class="form-outline">
+                                <label class="form-label" for="form11Example4">Số lượng</label>
+                                <input type="text" id="form11Example4" class="form-control" value="@Html.DisplayFor(modelItem => modelItem.SoLuong)" readonly />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-5">
+                        <div class="col">
+                            <div class="form-outline">
+                                <label class="form-label" for="form11Example4">Giá nhập</label>
+                                <input type="text" id="form11Example4" class="form-control" value="@Html.DisplayFor(modelItem => modelItem.GiaNhap)" readonly />
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <div class="form-outline">
+                                <label class="form-label" for="form11Example4">Hãng xe</label>
+                                <input type="text" id="form11Example4" class="form-control" value="@Html.DisplayFor(modelItem => modelItem.ThuongHieuXe.TenThuongHieu)" readonly />
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <div class="form-outline">
+                                <label class="form-label" for="form11Example4">Phân loại </label>
+                                <input type="text" id="form11Example4" class="form-control" value="@Html.DisplayFor(modelItem => modelItem.LoaiVatTu.Ten)" readonly />
+                            </div>
+                        </div>
+                    </div>
+                       
+
+                        <div class="col">
+                            <div class="form-outline">
+                                <label class="form-label" for="form11Example4">Ảnh</label>
+                                <img src="~/Images/@Model.Anh" alt="@Model.Ten" width="200px" />
+                            </div>
+                        </div>
+                </form>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

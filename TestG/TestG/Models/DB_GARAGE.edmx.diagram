@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="9da296d9fd9c47eab713427dae9b37d6" Name="Diagram1" ZoomLevel="63">
+        <EntityTypeShape EntityType="DA_QLGarageModel.BaoDuong1" Width="1.5" PointX="18.25" PointY="14.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DA_QLGarageModel.ChiTietBD" Width="1.5" PointX="11.25" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DA_QLGarageModel.ChiTietSuaChua" Width="1.5" PointX="11.75" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DA_QLGarageModel.ChiTietUser" Width="1.5" PointX="3.75" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DA_QLGarageModel.ChucVu" Width="1.5" PointX="1.5" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DA_QLGarageModel.CTNhapKhoVT" Width="1.5" PointX="11.25" PointY="10.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DA_QLGarageModel.CTTonKho" Width="1.5" PointX="8.25" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DA_QLGarageModel.DATLICH" Width="1.5" PointX="5.25" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DA_QLGarageModel.DichVu" Width="1.5" PointX="3" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DA_QLGarageModel.KhachHang" Width="1.5" PointX="0.75" PointY="10.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DA_QLGarageModel.LoaiVatTu" Width="1.5" PointX="3.75" PointY="22.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DA_QLGarageModel.NhaCungCap" Width="1.5" PointX="6.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="DA_QLGarageModel.NhanCongSuaChuaXe" Width="1.5" PointX="7.5" PointY="21.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DA_QLGarageModel.NhapKho" Width="1.5" PointX="9" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DA_QLGarageModel.PhanQuyen" Width="1.5" PointX="9" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="DA_QLGarageModel.PhanTrang" Width="1.5" PointX="11.75" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DA_QLGarageModel.Quyen" Width="1.5" PointX="6.75" PointY="25.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DA_QLGarageModel.SOKM" Width="1.5" PointX="9" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="DA_QLGarageModel.SuaChua" Width="1.5" PointX="5.25" PointY="18.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DA_QLGarageModel.sysdiagram" Width="1.5" PointX="13.75" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DA_QLGarageModel.ThayVatTu" Width="1.5" PointX="8.25" PointY="17.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DA_QLGarageModel.ThuongHieuXe" Width="1.5" PointX="0.75" PointY="14" IsExpanded="true" />
+        <EntityTypeShape EntityType="DA_QLGarageModel.TiepNhanXe" Width="1.5" PointX="3" PointY="13.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DA_QLGarageModel.TonKho" Width="1.5" PointX="6" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="DA_QLGarageModel.User" Width="1.5" PointX="13.75" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DA_QLGarageModel.VatTu" Width="1.5" PointX="6" PointY="13" IsExpanded="true" />
+        <AssociationConnector Association="DA_QLGarageModel.FK_BaoDuong1_DATLICH" ManuallyRouted="false" />
+        <AssociationConnector Association="DA_QLGarageModel.FK_BaoDuong1_DichVu" ManuallyRouted="false" />
+        <AssociationConnector Association="DA_QLGarageModel.FK_BaoDuong1_VatTu" ManuallyRouted="false" />
+        <AssociationConnector Association="DA_QLGarageModel.FK_ChiTietBD_DATLICH" ManuallyRouted="false" />
+        <AssociationConnector Association="DA_QLGarageModel.FK_ChiTietBD_SOKM" ManuallyRouted="false" />
+        <AssociationConnector Association="DA_QLGarageModel.FK_ChiTietBD_VatTu1" ManuallyRouted="false" />
+        <AssociationConnector Association="DA_QLGarageModel.FK_ChiTietUser_ChucVu" ManuallyRouted="false" />
+        <AssociationConnector Association="DA_QLGarageModel.FK_NhanCongSuaChuaXe_ChiTietUser1" ManuallyRouted="false" />
+        <AssociationConnector Association="DA_QLGarageModel.FK_NhapKho_ChiTietUser" ManuallyRouted="false" />
+        <AssociationConnector Association="DA_QLGarageModel.FK_PhanQuyen_ChiTietUser" ManuallyRouted="false" />
+        <AssociationConnector Association="DA_QLGarageModel.FK_TiepNhanXe_ChiTietUser1" ManuallyRouted="false" />
+        <AssociationConnector Association="DA_QLGarageModel.FK_TonKho_ChiTietUser" ManuallyRouted="false" />
+        <AssociationConnector Association="DA_QLGarageModel.FK_CTNhapKhoVT_NhapKho" ManuallyRouted="false" />
+        <AssociationConnector Association="DA_QLGarageModel.FK_CTNhapKhoVT_VatTu" ManuallyRouted="false" />
+        <AssociationConnector Association="DA_QLGarageModel.FK_CTTonKho_TonKho" ManuallyRouted="false" />
+        <AssociationConnector Association="DA_QLGarageModel.FK_CTTonKho_VatTu" ManuallyRouted="false" />
+        <AssociationConnector Association="DA_QLGarageModel.FK_DATLICH_DichVu" ManuallyRouted="false" />
+        <AssociationConnector Association="DA_QLGarageModel.FK_DATLICH_TiepNhanXe" ManuallyRouted="false" />
+        <AssociationConnector Association="DA_QLGarageModel.FK_ThayVatTu_DichVu" ManuallyRouted="false" />
+        <AssociationConnector Association="DA_QLGarageModel.FK_TiepNhanXe_KhachHang" ManuallyRouted="false" />
+        <AssociationConnector Association="DA_QLGarageModel.FK_VatTu_LoaiVatTu" ManuallyRouted="false" />
+        <AssociationConnector Association="DA_QLGarageModel.FK_NhapKho_NhaCungCap" ManuallyRouted="false" />
+        <AssociationConnector Association="DA_QLGarageModel.FK_NhanCongSuaChuaXe_SuaChua" ManuallyRouted="false" />
+        <AssociationConnector Association="DA_QLGarageModel.FK_PhanQuyen_Quyen" ManuallyRouted="false" />
+        <AssociationConnector Association="DA_QLGarageModel.FK_SuaChua_TiepNhanXe" ManuallyRouted="false" />
+        <AssociationConnector Association="DA_QLGarageModel.FK_ThayVatTu_SuaChua" ManuallyRouted="false" />
+        <AssociationConnector Association="DA_QLGarageModel.FK_ThayVatTu_VatTu" ManuallyRouted="false" />
+        <AssociationConnector Association="DA_QLGarageModel.FK__VatTu__IDHangXe__59063A47" ManuallyRouted="false" />
+        <AssociationConnector Association="DA_QLGarageModel.FK_TiepNhanXe_ThuongHieuXe" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

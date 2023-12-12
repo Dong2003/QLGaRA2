@@ -1,0 +1,58 @@
+﻿@model IEnumerable<TestG.Models.BaoDuong1>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SoLuong)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.GhiChu)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DATLICH.GhiChu)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VatTu.Ten)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DichVu.Ten)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.SoLuong)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.GhiChu)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DATLICH.GhiChu)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VatTu.Ten)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DichVu.Ten)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.IDBaoDuong }) |
+            @Html.ActionLink("Details", "Details", new { id=item.IDBaoDuong }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.IDBaoDuong })
+        </td>
+    </tr>
+}
+
+</table>

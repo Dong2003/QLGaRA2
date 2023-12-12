@@ -1,0 +1,103 @@
+﻿@using TestG.Models
+@using PagedList.Mvc;
+@model PagedList.PagedList<TestG.Models.DichVu>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    int i = 0;
+}
+
+<p class="btn btn-outline-info border-info">
+    @Html.ActionLink("Thêm dịch vụ", "Create")
+</p>
+
+<table class="table" border="1">
+    <thead class="thead-dark" style="text-align:left">
+        <tr>
+            <th>Stt</th>
+            <th scope="col">Tên dịch vụ</th>
+            <th style="text-align:right" scope="col">Giá</th>
+            <th style="text-align:center" scope="col">Chức năng</th>
+        </tr>
+    </thead>
+
+    @foreach (var item in Model)
+    {
+        i++;
+        <tr style="text-align:left">
+            <td>
+                @i
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ten)
+            </td>
+            <td style="text-align:right">
+                @{
+                    string formattedValue = string.Format("{0:#,0}", item.GiaTri);
+                }
+
+                @formattedValue
+            </td>
+            <td style="text-align:center">
+                <a href="@Url.Action("Edit", new { id = item.IDTienCong })" class="btn btn-warning" role="button"><span class="fas fa-edit"></span></a>
+                <button data-toggle="modal" data-target="@("#detail-"+item.IDTienCong)" data-url="@Url.Action("Details","DichVus",new {id = item.IDTienCong})" class="btn btn-warning" style="font:bold; color:white">Xem chi tiết</button>
+                @Html.Partial("Details", item)
+                <a onclick="if (confirm('Bạn có chắc chắn muốn xóa không') == true) {
+                    location.href='/DichVus/Delete?id=@item.IDTienCong'}"
+                   href="#" class="btn btn-danger"> <i class="fa fa-trash" aria-hidden="true"></i></a>
+            </td>
+        </tr>
+    }
+
+</table>
+
+<div class="PhanTrang-container">
+    <ul class="PhanTrang">
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+    </ul>
+</div>
+
+<style>
+    .PhanTrang-container {
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .PhanTrang {
+        display: flex;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+        .PhanTrang li {
+            margin-right: 10px;
+        }
+
+        .PhanTrang a {
+            display: block;
+            padding: 8px 12px;
+            text-decoration: none;
+            color: black;
+            background-color: none;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            transition: background-color 0.3s;
+        }
+
+            .PhanTrang a:hover {
+                background-color: red;
+            }
+
+        .PhanTrang .disabled {
+            opacity: 0.5;
+        }
+
+        .PhanTrang .active {
+            color: white;
+            background-color: #0094ff;
+        }
+</style>
